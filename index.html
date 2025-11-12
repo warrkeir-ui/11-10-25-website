@@ -1,281 +1,184 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hakuna Matatah Preschool & Childcare Center</title>
-  <meta name="description" content="Hakuna Matatah Preschool & Childcare Center – Where Learning Feels Like Play!" />
-  <!-- TailwindCSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    html { scroll-behavior:smooth; }
-    body { font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; }
-    /* helper to keep gallery cards tidy */
-    .card-img { @apply w-full h-56 object-cover; }
-  </style>
-</head>
-<body class="bg-emerald-50 text-slate-800">
-  <!-- Top bar -->
-  <header class="bg-white/90 backdrop-blur border-b border-emerald-100 sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-600 grid place-content-center text-white font-extrabold">HM</div>
-        <div class="leading-tight">
-          <p class="font-extrabold text-emerald-800">Hakuna Matatah</p>
-          <p class="text-xs -mt-0.5">Preschool & Childcare Center</p>
-        </div>
-      </a>
-      <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#programs" class="hover:text-emerald-700">Programs</a>
-        <a href="#gallery" class="hover:text-emerald-700">Gallery</a>
-        <a href="#staff" class="hover:text-emerald-700">Staff</a>
-        <a href="#enroll" class="hover:text-emerald-700">Enroll</a>
-        <a href="#contact" class="hover:text-emerald-700">Contact</a>
-        <a href="#enroll" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-emerald-700">Download Packet</a>
-      </nav>
-    </div>
-  </header>
+# We'll load the existing index.html, modify it to:
+# - ensure Director (Stefanie) image appears on the homepage (id="director-photo" or inject a simple hero/about section)
+# - update Staff section (id="staff") with staff images
+# - update Gallery section (id="gallery") with provided photos
+# - make Enrollment packet link auto-download (id="enrollment-download") and remove backup link (id="enrollment-backup")
+# - keep the rest of the styling and content identical ("previous design" is the uploaded file)
+#
+# Finally, save the updated file as /mnt/data/index_updated.html for the user to download.
 
-  <!-- HERO -->
-  <section id="home" class="relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 py-10 md:py-16 grid md:grid-cols-2 gap-8 md:gap-10 items-center">
-      <div>
-        <h1 class="text-3xl md:text-5xl font-extrabold text-emerald-800 leading-tight">Where Learning Feels Like Play!</h1>
-        <p class="mt-4 md:text-lg">Open <strong>Mon–Fri, 5:00 a.m. – 6:00 p.m.</strong> Before & Aftercare available. Serving Redford, Southfield, Detroit & Westland.</p>
-        <ul class="mt-4 text-sm list-disc ml-5 space-y-1">
-          <li>Safe, loving classrooms focused on whole-child development</li>
-          <li>STEM, art, literacy, music, outdoor play & field trips</li>
-          <li>Family-style meals and a strong home-to-school partnership</li>
-        </ul>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#enroll" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-xl font-semibold">Download Enrollment Packet</a>
-          <a href="#gallery" class="bg-white border border-emerald-200 hover:border-emerald-300 px-5 py-3 rounded-xl font-semibold">See Our Day</a>
-        </div>
-      </div>
-      <!-- Hero imagery: building + Director portrait -->
-      <div class="grid grid-cols-3 gap-3 md:gap-4">
-        <!-- Building -->
-        <div class="col-span-3 rounded-3xl overflow-hidden shadow border border-emerald-100">
-          <img src="images/school.jpeg" alt="Hakuna Matatah building" class="w-full h-56 md:h-64 object-cover" />
-        </div>
-        <!-- Director portrait (Stefanie) prominent on home page -->
-        <div class="col-span-2 rounded-3xl overflow-hidden shadow border border-emerald-100 bg-white flex items-center justify-center p-3">
-          <img src="images/Stefanie.png" alt="Stefanie D. Boyd – Director" class="h-48 object-contain" />
-        </div>
-        <!-- Accent image from classroom -->
-        <div class="rounded-3xl overflow-hidden shadow border border-emerald-100">
-          <img src="images/micah-puzzle.jpeg" alt="Smiling child with alphabet puzzle" class="w-full h-48 object-cover" />
-        </div>
-      </div>
-    </div>
-  </section>
+from bs4 import BeautifulSoup
+from pathlib import Path
 
-  <!-- PROGRAMS (short blurb) -->
-  <section id="programs" class="py-12 md:py-16 bg-emerald-50">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-800">Programs & Hours</h2>
-      <div class="grid md:grid-cols-3 gap-5 mt-6">
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold text-lg">Infants & Toddlers</h3>
-          <p class="text-sm mt-2">Warm, responsive care with sensory exploration, language building, and daily outdoor time.</p>
-        </div>
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold text-lg">Preschool</h3>
-          <p class="text-sm mt-2">Play-based curriculum aligned to early learning standards – literacy, math, science & arts.</p>
-        </div>
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold text-lg">Before/Aftercare & Summer</h3>
-          <p class="text-sm mt-2">Homework help, enrichment, field trips and full-day summer programming.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+src_path = Path("/mnt/data/index.html")
+html = src_path.read_text(encoding="utf-8", errors="ignore")
 
-  <!-- GALLERY (UPDATED images for Aquarium Adventure and Active Play) -->
-  <section id="gallery" class="bg-emerald-50/70 border-y border-emerald-100 py-12 md:py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-800">Our Jungle Adventures</h2>
-          <p class="text-sm text-slate-700 mt-1">Take a peek into our days filled with creativity, curiosity, and laughter.</p>
-        </div>
-      </div>
+soup = BeautifulSoup(html, "html.parser")
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Aquarium Adventure (UPDATED IMAGE) -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/aquarium 1.jpeg" alt="Children observing fish through the aquarium dome" class="card-img">
-          <figcaption class="p-3 text-sm">Exploring under the sea during our aquarium adventure.</figcaption>
-        </figure>
+# ---------- Enrollment packet ----------
+# Ensure an anchor exists with id="enrollment-download"; if found, update; else create a simple section.
+packet_filename = "Hakuna-Matatah-Enrollment-Packet.pdf"
+packet_path = Path("/mnt/data")/packet_filename
+# If the exact file isn't present, fall back to the (1).pdf filename but keep href pointing to the clean filename.
+if not packet_path.exists():
+    alt = Path("/mnt/data/")/"Hakuna-Matatah-Enrollment-Packet (1).pdf"
+    if alt.exists():
+        # Save/duplicate to desired name so the site can point at a single clean filename
+        packet_path.write_bytes(alt.read_bytes())
 
-        <!-- Eric Robot -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/eric-robot.jpeg" alt="Child building with colorful robot pieces" class="card-img">
-          <figcaption class="p-3 text-sm">STEM play – building robots and big imaginations.</figcaption>
-        </figure>
+enroll_anchor = soup.find(id="enrollment-download")
+if enroll_anchor:
+    enroll_anchor["href"] = packet_filename
+    enroll_anchor["download"] = ""  # empty value enables download in most browsers
+    enroll_anchor.string = enroll_anchor.get_text() or "Download Enrollment Packet"
+else:
+    # Create a section if missing
+    sec = soup.new_tag("section", id="enrollment")
+    h2 = soup.new_tag("h2")
+    h2.string = "Enrollment Packet"
+    a = soup.new_tag("a", id="enrollment-download", href=packet_filename)
+    a["download"] = ""
+    a["class"] = "btn btn-primary"
+    a.string = "Download Enrollment Packet"
+    sec.append(h2); sec.append(a)
+    # Insert before footer if possible, else append to body
+    footer = soup.find("footer")
+    if footer and footer.parent:
+        footer.insert_before(sec)
+    else:
+        soup.body.append(sec)
 
-        <!-- Lunch -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/Lunch.jpeg" alt="Children eating lunch together" class="card-img">
-          <figcaption class="p-3 text-sm">Family-style meals and table conversations.</figcaption>
-        </figure>
+# Remove any backup link
+backup = soup.find(id="enrollment-backup")
+if backup:
+    backup.decompose()
 
-        <!-- Magnet Tiles -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/magnet-tiles.jpeg" alt="Children building a tall magnet tile structure" class="card-img">
-          <figcaption class="p-3 text-sm">Engineering tall towers with magnet tiles.</figcaption>
-        </figure>
+# ---------- Director image on home page ----------
+director_src = "Stefanie.png"
+director_img = soup.find(id="director-photo")
+if director_img:
+    director_img["src"] = director_src
+    if "alt" not in director_img.attrs or not director_img["alt"]:
+        director_img["alt"] = "Stefanie D. Boyd — Director"
+else:
+    # Try to find an "about" or hero section to place director image into
+    target = soup.find(id="home") or soup.find("header") or soup.body
+    # Create a simple container with the image, keeping classes minimal so existing CSS applies
+    wrap = soup.new_tag("div", **{"class": "director-hero"})
+    img = soup.new_tag("img", id="director-photo", src=director_src, alt="Stefanie D. Boyd — Director")
+    img["style"] = "max-width:220px;border-radius:9999px;box-shadow:0 6px 18px rgba(0,0,0,.15);"
+    cap = soup.new_tag("p", **{"class":"subtitle"})
+    cap.string = "Meet Our Director: Stefanie D. Boyd"
+    wrap.append(img); wrap.append(cap)
+    # Insert after the first h1 on the page if present
+    h1 = soup.find("h1")
+    if h1:
+        h1.insert_after(wrap)
+    else:
+        target.insert(0, wrap)
 
-        <!-- Micah Puzzle -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/micah-puzzle.jpeg" alt="Child smiling while working on alphabet puzzle" class="card-img">
-          <figcaption class="p-3 text-sm">Alphabet puzzles and early literacy skills.</figcaption>
-        </figure>
+# ---------- Staff section ----------
+staff_imgs = [
+    ("Stefanie D. Boyd", "Director", "Stefanie.png"),
+    ("Keir W.", "Preschool Lead", "Keir.png"),
+    ("Kennedy W.", "Infant Lead", "Kennedy.png"),
+    ("Kathy B.", "Toddler Lead", "Kathy.png"),
+    ("Heaven", "Infant Room Co-Teacher", "Heaven.png"),
+]
 
-        <!-- Painting -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/painting.jpeg" alt="Children painting at easels with teacher support" class="card-img">
-          <figcaption class="p-3 text-sm">Creative art time with our caring teachers.</figcaption>
-        </figure>
+staff_section = soup.find(id="staff")
+if not staff_section:
+    # If no staff section, create one before footer
+    staff_section = soup.new_tag("section", id="staff")
+    h2 = soup.new_tag("h2"); h2.string = "Our Staff"
+    staff_section.append(h2)
+    if footer := soup.find("footer"):
+        footer.insert_before(staff_section)
+    else:
+        soup.body.append(staff_section)
 
-        <!-- Legos -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/legos.jpeg" alt="Children building with large lego blocks" class="card-img">
-          <figcaption class="p-3 text-sm">Building fine motor skills with blocks and bricks.</figcaption>
-        </figure>
+# Clear existing grid/cards inside staff section but keep heading
+for child in list(staff_section.children):
+    if getattr(child, "name", None) and child.name.lower() != "h2":
+        child.decompose()
 
-        <!-- Active Play (UPDATED IMAGE) -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/ridings.jpeg" alt="Child riding a pink bike during outdoor playtime" class="card-img">
-          <figcaption class="p-3 text-sm">Active play outdoors — biking fun and gross motor skills in motion!</figcaption>
-        </figure>
+grid = soup.new_tag("div", **{"class":"staff-grid"})
+for name, role, src in staff_imgs:
+    card = soup.new_tag("div", **{"class":"staff-card"})
+    img = soup.new_tag("img", src=src, alt=f"{name} — {role}", loading="lazy")
+    img["style"] = "width:160px;height:160px;object-fit:cover;border-radius:9999px;box-shadow:0 8px 24px rgba(0,0,0,.12);"
+    h3 = soup.new_tag("h3"); h3.string = name
+    p = soup.new_tag("p"); p.string = role
+    card.append(img); card.append(h3); card.append(p)
+    grid.append(card)
 
-        <!-- Math / Table play -->
-        <figure class="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100">
-          <img src="images/math.jpeg" alt="Children playing with STEM and math manipulatives at a table" class="card-img">
-          <figcaption class="p-3 text-sm">Early math skills with hands-on manipulatives.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+staff_section.append(grid)
 
-  <!-- STAFF -->
-  <section id="staff" class="py-12 md:py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-800">Meet Our Team</h2>
-      <p class="text-sm text-slate-700 mt-1">Caring educators who champion every child's growth.</p>
+# ---------- Gallery section ----------
+gallery_images = [
+    ("aquarium 1.jpeg", "Aquarium Adventure"),
+    ("ridings.jpeg", "Active Play"),
+    ("eric robot.jpeg", "STEM Building"),
+    ("magnet tiles.jpeg", "Magnet Tiles"),
+    ("micah puzzle.jpeg", "Alphabet Puzzle"),
+    ("painting.jpeg", "Creative Painting"),
+    ("legos.jpeg", "LEGO Time"),
+    ("math.jpeg", "Math & Manipulatives"),
+    ("Lunch.jpeg", "Family-Style Lunch"),
+    ("school.jpeg", "Our Building"),
+]
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mt-8">
-        <!-- Director -->
-        <div class="bg-white rounded-3xl p-4 border border-emerald-100 shadow-sm text-center">
-          <img src="images/Stefanie.png" alt="Stefanie D. Boyd – Director" class="mx-auto h-36 object-contain" />
-          <h3 class="font-bold mt-3">Stefanie D. Boyd</h3>
-          <p class="text-sm text-slate-600">Director</p>
-        </div>
-        <!-- Preschool Lead -->
-        <div class="bg-white rounded-3xl p-4 border border-emerald-100 shadow-sm text-center">
-          <img src="images/Keir.png" alt="Keir W. – Preschool Lead" class="mx-auto h-36 object-contain" />
-          <h3 class="font-bold mt-3">Keir W.</h3>
-          <p class="text-sm text-slate-600">Preschool Lead</p>
-        </div>
-        <!-- Infant Lead -->
-        <div class="bg-white rounded-3xl p-4 border border-emerald-100 shadow-sm text-center">
-          <img src="images/Kennedy.png" alt="Kennedy W. – Infant Lead" class="mx-auto h-36 object-contain" />
-          <h3 class="font-bold mt-3">Kennedy W.</h3>
-          <p class="text-sm text-slate-600">Infant Lead</p>
-        </div>
-        <!-- Toddler Lead -->
-        <div class="bg-white rounded-3xl p-4 border border-emerald-100 shadow-sm text-center">
-          <img src="images/Kathy.png" alt="Kathy B. – Toddler Lead" class="mx-auto h-36 object-contain" />
-          <h3 class="font-bold mt-3">Kathy B.</h3>
-          <p class="text-sm text-slate-600">Toddler Lead</p>
-        </div>
-        <!-- Infant Room Co-Teacher -->
-        <div class="bg-white rounded-3xl p-4 border border-emerald-100 shadow-sm text-center">
-          <img src="images/Heaven.png" alt="Heaven – Infant Room Co-Teacher" class="mx-auto h-36 object-contain" />
-          <h3 class="font-bold mt-3">Heaven</h3>
-          <p class="text-sm text-slate-600">Infant Room Co-Teacher</p>
-        </div>
-      </div>
-    </div>
-  </section>
+gallery = soup.find(id="gallery")
+if not gallery:
+    gallery = soup.new_tag("section", id="gallery")
+    h2 = soup.new_tag("h2"); h2.string = "Gallery"
+    gallery.append(h2)
+    # place before footer
+    if footer := soup.find("footer"):
+        footer.insert_before(gallery)
+    else:
+        soup.body.append(gallery)
 
-  <!-- ENROLLMENT (download with backup) -->
-  <section id="enroll" class="py-12 md:py-16 bg-emerald-50/70 border-y border-emerald-100">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-800">Ready to Enroll?</h2>
-      <p class="text-sm text-slate-700 mt-1">Download our enrollment packet, complete the forms, and call us to schedule a tour.</p>
+# Remove any existing grid after the h2 (but keep h2)
+for child in list(gallery.children):
+    if getattr(child, "name", None) and child.name.lower() != "h2":
+        child.decompose()
 
-      <div class="mt-6 flex flex-wrap items-center gap-4">
-        <button onclick="downloadPacket()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold">Download Enrollment Packet</button>
-        <a id="backup-link" href="files/Hakuna-Matatah-Enrollment-Packet%20(1).pdf" download class="text-emerald-800 underline underline-offset-4">Backup link (click if the download doesn’t start)</a>
-      </div>
+ggrid = soup.new_tag("div", **{"class": "gallery-grid"})
+for src, caption in gallery_images:
+    fig = soup.new_tag("figure", **{"class":"gallery-item"})
+    img = soup.new_tag("img", src=src, alt=caption, loading="lazy")
+    cap = soup.new_tag("figcaption"); cap.string = caption
+    fig.append(img); fig.append(cap)
+    ggrid.append(fig)
 
-      <p class="text-xs text-slate-600 mt-3">Primary file: <code>files/Hakuna-Matatah-Enrollment-Packet.pdf</code> • Backup file: <code>files/Hakuna-Matatah-Enrollment-Packet (1).pdf</code></p>
-    </div>
-  </section>
+gallery.append(ggrid)
 
-  <!-- CONTACT -->
-  <section id="contact" class="py-12 md:py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-800">Contact Us</h2>
-      <div class="grid md:grid-cols-3 gap-6 mt-6">
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold">Address</h3>
-          <p class="text-sm mt-2">26140 W 7 Mile Road, Redford, MI 48240</p>
-        </div>
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold">Phone</h3>
-          <p class="text-sm mt-2">(313) 694-3140</p>
-        </div>
-        <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm">
-          <h3 class="font-bold">Hours</h3>
-          <p class="text-sm mt-2">Monday – Friday • 5:00 a.m. – 6:00 p.m.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+# ---------- Minimal CSS to ensure grids look fine if not present ----------
+# We'll detect if .staff-grid or .gallery-grid styles exist; if not, add minimal embedded CSS that won't fight the old theme.
+need_style = True
+for style in soup.find_all("style"):
+    if ".staff-grid" in style.get_text() or ".gallery-grid" in style.get_text():
+        need_style = False
+        break
 
-  <!-- FOOTER -->
-  <footer class="bg-white border-t border-emerald-100">
-    <div class="max-w-6xl mx-auto px-4 py-8 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
-      <p class="text-slate-600">© <span id="year"></span> Hakuna Matatah Preschool & Childcare Center. All rights reserved.</p>
-      <p class="text-slate-500">“Where Learning Feels Like Play!”</p>
-    </div>
-  </footer>
+if need_style:
+    style = soup.new_tag("style")
+    style.string = """
+/* Lightweight grid helpers (keeps your original color/typography) */
+.staff-grid, .gallery-grid { display:grid; gap:1.25rem; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); align-items:start; }
+.staff-card { text-align:center; padding:1rem; border-radius:1rem; background:rgba(255,255,255,.6); }
+.gallery-item img { width:100%; height:220px; object-fit:cover; border-radius:1rem; box-shadow:0 6px 18px rgba(0,0,0,.12); }
+.gallery-item figcaption { margin-top:.5rem; font-size:.95rem; opacity:.8; text-align:center; }
+"""
+    # Prefer to append into <head>
+    if soup.head:
+        soup.head.append(style)
+    else:
+        soup.body.insert(0, style)
 
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+# Save updated file
+out_path = Path("/mnt/data/index_updated.html")
+out_path.write_text(str(soup), encoding="utf-8")
 
-    // Attempt to download the primary enrollment packet; fall back to backup if needed
-    function downloadPacket() {
-      const primary = 'files/Hakuna-Matatah-Enrollment-Packet.pdf';
-      const backup = document.getElementById('backup-link').getAttribute('href');
-
-      // Start primary download
-      const a = document.createElement('a');
-      a.href = primary;
-      a.download = 'Hakuna-Matatah-Enrollment-Packet.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      // Check availability; if primary fails, trigger backup
-      fetch(primary, { method: 'HEAD' })
-        .then(r => { if (!r.ok) throw new Error('primary missing'); })
-        .catch(() => {
-          const b = document.createElement('a');
-          b.href = backup;
-          b.download = 'Hakuna-Matatah-Enrollment-Packet.pdf';
-          document.body.appendChild(b);
-          b.click();
-          b.remove();
-        });
-    }
-  </script>
-</body>
-</html>
+out_path, out_path.exists()
