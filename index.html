@@ -1,225 +1,709 @@
-
-index_html = r"""<!doctype html>
+<!doctype html>
 <html lang="en" id="top">
- <head>
-  <meta charset="UTF-8">
-  <title>Hakuna Matatah Preschool &amp; Childcare Center</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hakuna Matatah Preschool &amp; Childcare Center – Where Learning Feels Like Play! Quality childcare in Redford, MI.">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hakuna Matatah Preschool & Childcare Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Hakuna Matatah Preschool & Childcare Center – Where Learning and Care Meet. Quality Christian childcare in Redford, MI." />
   <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body { box-sizing: border-box; }
+    body { box-sizing: border-box; margin: 0; height: 100%; }
     html { scroll-behavior: smooth; height: 100%; }
-    body { height: 100%; margin: 0; }
-    @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-    .leaf-sway { animation: sway 3s ease-in-out infinite; }
-    .float-animation { animation: float 4s ease-in-out infinite; }
-    .vine-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c5 10 10 15 20 15-10 5-15 10-15 20-5-10-10-15-20-15 10-5 15-10 15-20z' fill='%23047857' fill-opacity='0.08'/%3E%3C/svg%3E");
+
+    @keyframes sway { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+    .leaf-sway{ animation:sway 3s ease-in-out infinite }
+    .float-animation{ animation:float 4s ease-in-out infinite }
+    .fade-in{ animation:fadeIn .6s ease-out forwards }
+    .vine-pattern{
+      background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c5 10 10 15 20 15-10 5-15 10-15 20-5-10-10-15-20-15 10-5 15-10 15-20z' fill='%23047857' fill-opacity='0.1'/%3E%3C/svg%3E");
     }
-    .jungle-shadow { box-shadow: 0 10px 30px rgba(5,150,105,0.3); }
-    .section-title { @apply text-3xl md:text-4xl font-extrabold text-emerald-900; }
+    .jungle-shadow{ box-shadow:0 10px 30px rgba(5,150,105,.3) }
+
+    .page-section{ display:none }
+    .page-section.active{ display:block }
+
+    .nav-active{ background:rgba(253,224,71,.3); border-bottom:3px solid #FDE047 }
+
+    /* Small utility for rounded images on staff cards if you add real photos later */
+    .img-cover{ object-fit:cover; width:100%; height:100% }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
+  <style>@view-transition{navigation:auto}</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="bg-gradient-to-b from-lime-50 to-emerald-50 text-slate-800">
-  <!-- NAVBAR (Jungle) -->
+</head>
+
+<body class="bg-gradient-to-b from-lime-50 to-emerald-50 text-slate-800">
+  <!-- NAVBAR -->
   <header class="bg-gradient-to-r from-green-700 via-emerald-600 to-green-700 text-white sticky top-0 z-40 shadow-lg border-b-4 border-yellow-400">
-   <nav class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
-    <div class="flex items-center gap-3">
-     <!-- Jungle Leaf Icon -->
-     <svg class="w-10 h-10 leaf-sway" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path d="M50 10C30 30 20 50 20 70C20 85 32 95 50 95C68 95 80 85 80 70C80 50 70 30 50 10Z" fill="#FCD34D"/>
-       <path d="M50 10C50 10 55 40 70 55C60 50 50 50 50 70" stroke="#059669" stroke-width="3" fill="none"/>
-     </svg>
-     <div>
-      <div id="preschool-name" class="font-extrabold tracking-wide text-xl md:text-2xl">Hakuna Matatah</div>
-      <div class="text-xs text-yellow-200">🌴 Adventure Awaits 🌴</div>
-     </div>
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+        <svg class="w-10 h-10 leaf-sway" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 10C30 30 20 50 20 70C20 85 32 95 50 95C68 95 80 85 80 70C80 50 70 30 50 10Z" fill="#FCD34D"/>
+          <path d="M50 10C50 10 55 40 70 55C60 50 50 50 50 70" stroke="#059669" stroke-width="3" fill="none"/>
+        </svg>
+        <div>
+          <div id="preschool-name" class="font-extrabold tracking-wide text-xl md:text-2xl">Hakuna Matatah</div>
+          <div class="text-xs text-yellow-200">🌴 Adventure Awaits 🌴</div>
+        </div>
+      </div>
+
+      <button class="md:hidden border-2 border-yellow-300 px-3 py-2 rounded-lg text-sm font-bold bg-green-800 hover:bg-green-900" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">🌿 Menu</button>
+
+      <ul class="hidden md:flex gap-4 text-sm font-bold">
+        <li><a href="#" onclick="showPage('home')" class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">🏠 Home</a></li>
+        <li class="relative group">
+          <button class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">📚 Classrooms ▾</button>
+          <ul class="absolute hidden group-hover:block bg-green-800 rounded-lg shadow-lg mt-2 py-2 min-w-[200px]">
+            <li><a href="#" onclick="showPage('infant')" class="block px-4 py-2 hover:bg-green-700">🍼 Infant</a></li>
+            <li><a href="#" onclick="showPage('toddler')" class="block px-4 py-2 hover:bg-green-700">🧸 Toddler</a></li>
+            <li><a href="#" onclick="showPage('preschool')" class="block px-4 py-2 hover:bg-green-700">🎨 Preschool</a></li>
+            <li><a href="#" onclick="showPage('aftercare')" class="block px-4 py-2 hover:bg-green-700">⚽ Aftercare</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="showPage('calendar')" class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">📅 Calendar</a></li>
+        <li><a href="#" onclick="showPage('gallery')" class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">🖼️ Gallery</a></li>
+        <li><a href="#" onclick="showPage('staff')" class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">👥 Staff</a></li>
+        <li><a href="#" onclick="showPage('contact')" class="nav-link px-3 py-2 rounded hover:text-yellow-300 transition-colors">📞 Contact</a></li>
+      </ul>
+    </nav>
+
+    <div id="mobileMenu" class="md:hidden hidden border-t-2 border-yellow-300/40 bg-green-800">
+      <ul class="px-4 pb-4 pt-2 space-y-2 text-sm font-bold">
+        <li><a href="#" onclick="showPage('home')" class="block py-2 hover:text-yellow-300">🏠 Home</a></li>
+        <li class="border-t border-green-700 pt-2 mt-2">
+          <div class="text-yellow-300 text-xs mb-2">CLASSROOMS</div>
+          <a href="#" onclick="showPage('infant')" class="block py-2 pl-4 hover:text-yellow-300">🍼 Infant</a>
+          <a href="#" onclick="showPage('toddler')" class="block py-2 pl-4 hover:text-yellow-300">🧸 Toddler</a>
+          <a href="#" onclick="showPage('preschool')" class="block py-2 pl-4 hover:text-yellow-300">🎨 Preschool</a>
+          <a href="#" onclick="showPage('aftercare')" class="block py-2 pl-4 hover:text-yellow-300">⚽ Aftercare</a>
+        </li>
+        <li><a href="#" onclick="showPage('calendar')" class="block py-2 hover:text-yellow-300">📅 Calendar</a></li>
+        <li><a href="#" onclick="showPage('gallery')" class="block py-2 hover:text-yellow-300">🖼️ Gallery</a></li>
+        <li><a href="#" onclick="showPage('staff')" class="block py-2 hover:text-yellow-300">👥 Staff</a></li>
+        <li><a href="#" onclick="showPage('contact')" class="block py-2 hover:text-yellow-300">📞 Contact</a></li>
+      </ul>
     </div>
-    <button class="md:hidden border-2 border-yellow-300 px-3 py-2 rounded-lg text-sm font-bold bg-green-800 hover:bg-green-900" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">🌿 Menu</button>
-    <ul class="hidden md:flex gap-6 text-sm font-bold">
-     <li><a href="#top" class="hover:text-yellow-300 transition-colors">🏠 Home</a></li>
-     <li><a href="#programs" class="hover:text-yellow-300 transition-colors">📚 Programs</a></li>
-     <li><a href="#gallery" class="hover:text-yellow-300 transition-colors">🖼️ Gallery</a></li>
-     <li><a href="#staff" class="hover:text-yellow-300 transition-colors">👥 Our Team</a></li>
-     <li><a href="#enrollment" class="hover:text-yellow-300 transition-colors">✏️ Enrollment</a></li>
-     <li><a href="#contact" class="hover:text-yellow-300 transition-colors">📞 Contact</a></li>
-    </ul>
-   </nav>
-   <div id="mobileMenu" class="md:hidden hidden border-t-2 border-yellow-300/40 bg-green-800">
-    <ul class="px-4 pb-4 pt-2 space-y-2 text-sm font-bold">
-     <li><a href="#top" class="block py-2 hover:text-yellow-300">🏠 Home</a></li>
-     <li><a href="#programs" class="block py-2 hover:text-yellow-300">📚 Programs</a></li>
-     <li><a href="#gallery" class="block py-2 hover:text-yellow-300">🖼️ Gallery</a></li>
-     <li><a href="#staff" class="block py-2 hover:text-yellow-300">👥 Our Team</a></li>
-     <li><a href="#enrollment" class="block py-2 hover:text-yellow-300">✏️ Enrollment</a></li>
-     <li><a href="#contact" class="block py-2 hover:text-yellow-300">📞 Contact</a></li>
-    </ul>
-   </div>
   </header>
 
-  <!-- HERO -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-green-600 via-emerald-700 to-teal-800 text-white vine-pattern">
-   <div class="max-w-6xl mx-auto px-4 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center relative z-10">
-    <div>
-     <p id="hero-tagline" class="uppercase tracking-[0.2em] text-xs text-yellow-300 mb-3 font-bold flex items-center gap-2">🌺 Where Learning and Care Meet 🌺</p>
-     <h1 id="hero-title" class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">Hakuna Matatah Preschool &amp; Childcare Center</h1>
-     <p id="hero-description" class="text-lg text-emerald-50 mb-8 leading-relaxed">A warm, faith-filled learning environment where children grow, explore, and discover the joy of learning through play, creativity, and love.</p>
-     <div class="flex flex-wrap gap-4">
-      <a id="enroll-download" href="Hakuna-Matatah-Enrollment-Packet.pdf" download="Hakuna-Matatah-Enrollment-Packet.pdf" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-yellow-400 text-green-900 font-bold text-base shadow-lg hover:bg-yellow-300 hover:scale-105 transition-all jungle-shadow">
-        🎒 Download Enrollment Packet
-      </a>
-      <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 rounded-full border-3 border-yellow-300 bg-green-800/80 text-yellow-50 font-bold text-base hover:bg-green-900 hover:scale-105 transition-all">
-        🗓️ Schedule a Tour
-      </a>
-     </div>
-     <div class="mt-6 bg-green-800/60 backdrop-blur-sm rounded-2xl p-4 border-2 border-yellow-400/30">
-      <p id="hours-text" class="text-sm text-yellow-100 flex items-center gap-2"><span class="text-2xl">⏰</span> <span>Open Monday–Friday • <span class="font-bold text-yellow-300">5:00 a.m. – 6:00 p.m.</span></span></p>
-     </div>
+  <!-- HOME -->
+  <section id="home-page" class="page-section active">
+    <div class="relative overflow-hidden bg-gradient-to-br from-green-600 via-emerald-700 to-teal-800 text-white vine-pattern">
+      <div class="absolute top-0 left-0 w-full h-full opacity-20">
+        <svg class="absolute top-10 left-10 w-32 h-32 leaf-sway" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="40" ry="50" fill="#10B981" opacity="0.6"/></svg>
+        <svg class="absolute top-20 right-20 w-40 h-40 float-animation" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="35" ry="45" fill="#34D399" opacity="0.5"/></svg>
+      </div>
+
+      <div class="max-w-6xl mx-auto px-4 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        <div>
+          <p id="hero-tagline" class="uppercase tracking-[0.2em] text-xs text-yellow-300 mb-3 font-bold flex items-center gap-2">🌺 Where Learning and Care Meet 🌺</p>
+          <h1 id="hero-title" class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-5">Hakuna Matatah Preschool &amp; Childcare Center</h1>
+          <p id="hero-description" class="text-lg text-emerald-50 mb-8 leading-relaxed">A warm, faith-filled learning environment where children grow, explore, and discover the joy of learning through play, creativity, and love.</p>
+
+          <div class="flex flex-wrap gap-4">
+            <!-- PDF wired to your uploaded file name -->
+            <a href="Hakuna-Matatah-Enrollment-Packet.pdf" download class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-yellow-400 text-green-900 font-bold text-base shadow-lg hover:bg-yellow-300 hover:scale-105 transition-all jungle-shadow">🎒 Download Enrollment Packet</a>
+            <a href="#" onclick="showPage('contact')" class="inline-flex items-center justify-center px-6 py-3 rounded-full border-3 border-yellow-300 bg-green-800/80 text-yellow-50 font-bold text-base hover:bg-green-900 hover:scale-105 transition-all">🗓️ Schedule a Tour</a>
+          </div>
+
+          <div class="mt-6 bg-green-800/60 backdrop-blur-sm rounded-2xl p-4 border-2 border-yellow-400/30">
+            <p class="text-sm text-yellow-100 flex items-center gap-2">
+              <span class="text-2xl">⏰</span>
+              <span>Open Monday–Friday • <span class="font-bold text-yellow-300">5:00 a.m. – 6:00 p.m.</span> <span class="opacity-80">(Extended hours available — see Director)</span></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="relative float-animation">
+          <div class="bg-gradient-to-br from-lime-400 to-green-500 rounded-3xl p-8 jungle-shadow border-4 border-yellow-400">
+            <!-- Jungle scene SVG -->
+            <svg viewBox="0 0 400 400" class="w-full h-auto">
+              <rect width="400" height="400" fill="#87CEEB"/>
+              <circle cx="320" cy="80" r="40" fill="#FDB813"/>
+              <ellipse cx="200" cy="350" rx="250" ry="100" fill="#059669"/>
+              <rect x="80" y="200" width="20" height="120" fill="#92400E"/>
+              <circle cx="90" cy="180" r="50" fill="#10B981"/>
+              <rect x="190" y="180" width="15" height="140" fill="#78350F" rx="3"/>
+              <path d="M197 180 Q150 150 140 160" stroke="#10B981" stroke-width="8" fill="none"/>
+              <path d="M197 180 Q240 150 250 160" stroke="#34D399" stroke-width="8" fill="none"/>
+              <circle cx="150" cy="250" r="18" fill="#8B4513"/>
+              <ellipse cx="150" cy="270" rx="15" ry="20" fill="#A0522D"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 left-0 w-full">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-16"><path d="M0,60 C300,100 500,20 800,60 L800,120 L0,120 Z" fill="#F0FDF4"/></svg>
+      </div>
     </div>
 
-    <!-- Director Card on Home -->
-    <div class="relative float-animation">
-      <div class="bg-emerald-50 rounded-3xl p-6 jungle-shadow border-4 border-yellow-400 text-emerald-900">
-        <img src="Stefanie.png" alt="Director Stefanie Boyd" class="w-48 h-48 object-cover rounded-full mx-auto border-4 border-emerald-300 shadow-lg"/>
-        <h3 class="mt-4 text-center text-2xl font-extrabold">Stefanie D. Boyd</h3>
-        <p class="text-center text-sm font-semibold text-emerald-700">Center Director</p>
-        <p class="text-center mt-2 text-sm">“Where learning feels like play!”</p>
-      </div>
-    </div>
-   </div>
-   <div class="absolute bottom-0 left-0 w-full">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-16">
-      <path d="M0,60 C300,100 500,20 800,60 L800,120 L0,120 Z" fill="#F0FDF4"/>
-      <path d="M800,60 C900,80 1000,40 1200,60 L1200,120 L800,120 Z" fill="#F0FDF4"/>
-    </svg>
-   </div>
-  </section>
-
-  <!-- Programs -->
-  <section id="programs" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="section-title">Programs</h2>
-    <p class="mt-2 text-emerald-700">Infants • Toddlers • Preschool • Before &amp; After Care • Summer</p>
-    <div class="grid md:grid-cols-3 gap-6 mt-8">
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow">
-        <h3 class="font-bold text-xl text-emerald-900">Play-Based Learning</h3>
-        <p class="text-sm mt-2 text-emerald-800">Hands-on experiences that nurture curiosity, problem-solving, and social-emotional growth.</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow">
-        <h3 class="font-bold text-xl text-emerald-900">Faith &amp; Character</h3>
-        <p class="text-sm mt-2 text-emerald-800">We model kindness, respect, and responsibility in a warm, Christian environment.</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow">
-        <h3 class="font-bold text-xl text-emerald-900">Hours for Families</h3>
-        <p class="text-sm mt-2 text-emerald-800">Open Mon–Fri, 5:00 a.m.–6:00 p.m. Flexible scheduling available.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery -->
-  <section id="gallery" class="bg-emerald-50 py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="section-title">Gallery</h2>
-      <div class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <figure class="bg-white rounded-xl overflow-hidden border border-emerald-100">
-          <img src="aquarium 1.jpeg" alt="Aquarium Adventure" class="w-full h-56 object-cover">
-          <figcaption class="p-3 text-sm font-semibold text-emerald-800">Aquarium Adventure</figcaption>
-        </figure>
-        <figure class="bg-white rounded-xl overflow-hidden border border-emerald-100">
-          <img src="ridings.jpeg" alt="Active Play Outdoors" class="w-full h-56 object-cover">
-          <figcaption class="p-3 text-sm font-semibold text-emerald-800">Active Play</figcaption>
-        </figure>
-        <img src="eric robot.jpeg" alt="STEM building" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="Lunch.jpeg" alt="Healthy meal time" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="magnet tiles.jpeg" alt="Magnet tiles" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="micah puzzle.jpeg" alt="Alphabet puzzle" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="painting.jpeg" alt="Art time" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="legos.jpeg" alt="Blocks & Legos" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="math.jpeg" alt="Math manipulatives" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
-        <img src="school.jpeg" alt="Our Building" class="w-full h-56 object-cover rounded-xl border border-emerald-100">
+    <!-- Quick links -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <h2 class="text-3xl font-bold text-center text-green-800 mb-12">🌿 Explore Our Jungle 🌿</h2>
+      <div class="grid md:grid-cols-4 gap-6">
+        <div onclick="showPage('infant')" class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-4 border-blue-300 hover:scale-105">
+          <div class="text-5xl mb-3 text-center">🍼</div>
+          <h3 id="infant-name" class="text-xl font-bold text-center text-blue-600 mb-2">Infant</h3>
+          <p class="text-sm text-gray-600 text-center">Ages 6 weeks - 18 months</p>
+        </div>
+        <div onclick="showPage('toddler')" class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-4 border-orange-300 hover:scale-105">
+          <div class="text-5xl mb-3 text-center">🧸</div>
+          <h3 id="toddler-name" class="text-xl font-bold text-center text-orange-600 mb-2">Toddler</h3>
+          <p class="text-sm text-gray-600 text-center">Ages 18 months - 3 years</p>
+        </div>
+        <div onclick="showPage('preschool')" class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-4 border-purple-300 hover:scale-105">
+          <div class="text-5xl mb-3 text-center">🎨</div>
+          <h3 id="preschool-name-class" class="text-xl font-bold text-center text-purple-600 mb-2">Preschool</h3>
+          <p class="text-sm text-gray-600 text-center">Ages 3 - 5 years</p>
+        </div>
+        <div onclick="showPage('aftercare')" class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-4 border-green-300 hover:scale-105">
+          <div class="text-5xl mb-3 text-center">⚽</div>
+          <h3 id="aftercare-name" class="text-xl font-bold text-center text-green-600 mb-2">Aftercare</h3>
+          <p class="text-sm text-gray-600 text-center">Ages 5 - 12 years</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Staff -->
-  <section id="staff" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="section-title">Meet Our Team</h2>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow text-center">
-        <img src="Stefanie.png" alt="Stefanie Boyd - Director" class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-emerald-200">
-        <h3 class="mt-3 font-extrabold text-emerald-900">Stefanie D. Boyd</h3>
-        <p class="text-sm text-emerald-700">Director</p>
+  <!-- INFANT -->
+  <section id="infant-page" class="page-section">
+    <div class="bg-gradient-to-br from-blue-400 to-blue-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">🍼</div>
+        <h1 id="infant-title" class="text-5xl font-extrabold text-center mb-4">Infant Classroom</h1>
+        <p class="text-xl text-center text-blue-100">Ages 6 weeks - 18 months</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow text-center">
-        <img src="Keir.png" alt="Keir W. - Preschool Lead" class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-emerald-200">
-        <h3 class="mt-3 font-extrabold text-emerald-900">Keir W.</h3>
-        <p class="text-sm text-emerald-700">Preschool Lead</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow text-center">
-        <img src="Kennedy.png" alt="Kennedy W. - Infant Lead" class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-emerald-200">
-        <h3 class="mt-3 font-extrabold text-emerald-900">Kennedy W.</h3>
-        <p class="text-sm text-emerald-700">Infant Lead</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow text-center">
-        <img src="Kathy.png" alt="Kathy B. - Toddler Lead" class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-emerald-200">
-        <h3 class="mt-3 font-extrabold text-emerald-900">Kathy B.</h3>
-        <p class="text-sm text-emerald-700">Toddler Lead</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow text-center">
-        <img src="Heaven.png" alt="Heaven - Infant Room Co-Teacher" class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-emerald-200">
-        <h3 class="mt-3 font-extrabold text-emerald-900">Heaven</h3>
-        <p class="text-sm text-emerald-700">Infant Room Co-Teacher</p>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-blue-300">
+          <h2 class="text-3xl font-bold text-blue-600 mb-6">🌟 Our Approach</h2>
+          <p class="text-gray-700 mb-4 leading-relaxed">Our infant program provides a nurturing, safe environment where your little one can explore and grow. We focus on secure attachments, sensory play, music and language every day.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="text-2xl">💙</span><span>Individualized care and feeding schedules</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🎵</span><span>Music, movement & sensory activities</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">📖</span><span>Daily reading & early language</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🛏️</span><span>Safe sleep practices & cozy nap areas</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 border-4 border-blue-400">
+          <h2 class="text-3xl font-bold text-blue-700 mb-6">📋 Daily Schedule</h2>
+          <p class="text-sm text-gray-700 mb-4">Our Little Explorers’ Day includes breakfast, circle time, sensory/arts, outdoor play, naps, and gentle routines from morning to evening (potty practice for toddlers). See Contact page for hours.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Enrollment -->
-  <section id="enrollment" class="bg-emerald-50 py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="section-title">Enrollment</h2>
-      <p class="mt-2 text-emerald-700">Ready to join the pride? Download our enrollment packet below.</p>
-      <a href="Hakuna-Matatah-Enrollment-Packet.pdf" download="Hakuna-Matatah-Enrollment-Packet.pdf"
-         class="mt-6 inline-flex items-center justify-center px-6 py-3 rounded-full bg-yellow-400 text-green-900 font-bold text-base shadow-lg hover:bg-yellow-300 hover:scale-105 transition-all jungle-shadow">
-        🎒 Download Enrollment Packet
-      </a>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="section-title">Contact</h2>
-    <div class="grid md:grid-cols-2 gap-8 mt-6">
-      <div class="bg-white p-6 rounded-2xl border-2 border-emerald-100 jungle-shadow">
-        <p class="font-semibold text-emerald-900">Address</p>
-        <p class="text-emerald-800">26140 W 7 Mile Road, Redford, MI 48240</p>
-        <p class="mt-3 font-semibold text-emerald-900">Phone</p>
-        <p class="text-emerald-800">(313) 694-3140</p>
-        <p class="mt-3 font-semibold text-emerald-900">Hours</p>
-        <p class="text-emerald-800">Mon–Fri, 5:00 a.m.–6:00 p.m.</p>
+  <!-- TODDLER -->
+  <section id="toddler-page" class="page-section">
+    <div class="bg-gradient-to-br from-orange-400 to-orange-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">🧸</div>
+        <h1 id="toddler-title" class="text-5xl font-extrabold text-center mb-4">Toddler Classroom</h1>
+        <p class="text-xl text-center text-orange-100">Ages 18 months - 3 years</p>
       </div>
-      <iframe class="w-full h-64 rounded-2xl border-4 border-yellow-300 jungle-shadow"
-        src="https://www.google.com/maps?q=26140%20W%207%20Mile%20Road%20Redford%20MI%2048240&output=embed"></iframe>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-orange-300">
+          <h2 class="text-3xl font-bold text-orange-600 mb-6">🌟 Learning Adventures</h2>
+          <p class="text-gray-700 mb-4 leading-relaxed">Toddlers are natural explorers! We encourage independence, language development, social skills, and big body movement through hands-on play.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="text-2xl">🎨</span><span>Creative art & sensory exploration</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🏃</span><span>Gross-motor play & outdoor time</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🗣️</span><span>Language & communication games</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🤝</span><span>Sharing, turn-taking & friendships</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-orange-100 to-orange-200 rounded-3xl p-8 border-4 border-orange-400">
+          <h2 class="text-3xl font-bold text-orange-700 mb-6">🎯 Key Milestones</h2>
+          <p class="text-sm text-gray-700 mb-2">Physical development • Language • Social-emotional • Independence.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer class="bg-emerald-900 text-emerald-50 py-6">
-    <div class="max-w-6xl mx-auto px-4 text-sm flex flex-col md:flex-row items-center justify-between gap-2">
-      <p>© <span id="year"></span> Hakuna Matatah Preschool &amp; Childcare Center • Where Learning Feels Like Play!</p>
-      <a href="#top" class="underline text-yellow-200">Back to top ↑</a>
+  <!-- PRESCHOOL -->
+  <section id="preschool-page" class="page-section">
+    <div class="bg-gradient-to-br from-purple-400 to-purple-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">🎨</div>
+        <h1 id="preschool-title" class="text-5xl font-extrabold text-center mb-4">Preschool Classroom</h1>
+        <p class="text-xl text-center text-purple-100">Ages 3 - 5 years</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-purple-300">
+          <h2 class="text-3xl font-bold text-purple-600 mb-6">🌟 School Readiness</h2>
+          <p class="text-gray-700 mb-4 leading-relaxed">We build literacy, math, science, and social skills with hands-on centers, play-based lessons, and weekly themes.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="text-2xl">📚</span><span>Pre-reading & early literacy</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🔢</span><span>Counting, shapes & problem-solving</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🔬</span><span>STEM explorations</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🎭</span><span>Dramatic play & creativity</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-3xl p-8 border-4 border-purple-400">
+          <h2 class="text-3xl font-bold text-purple-700 mb-6">📚 Curriculum Highlights</h2>
+          <p class="text-sm text-gray-700">Letters/sounds & handwriting • Early reading & rhyming • Numeracy & patterns • Weekly themes (animals, helpers, five senses, etc.) • Social-emotional learning and safety.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTERCARE -->
+  <section id="aftercare-page" class="page-section">
+    <div class="bg-gradient-to-br from-green-500 to-green-700 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">⚽</div>
+        <h1 id="aftercare-title" class="text-5xl font-extrabold text-center mb-4">Aftercare Program</h1>
+        <p class="text-xl text-center text-green-100">Ages 5 - 12 years</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-green-300">
+          <h2 class="text-3xl font-bold text-green-600 mb-6">🌟 Zazu Classroom</h2>
+          <p class="text-gray-700 mb-4 leading-relaxed">Balanced afternoons with snack & decompressing, homework help, enrichment, games/outdoor play, and creative “maker space” time.</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="text-2xl">📝</span><span>Homework assistance & quiet study</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🎮</span><span>Games, sports & outdoor activities</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🎨</span><span>Arts, crafts & maker projects</span></li>
+            <li class="flex items-start gap-3"><span class="text-2xl">🍎</span><span>Healthy snacks & social time</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-3xl p-8 border-4 border-green-400">
+          <h2 class="text-3xl font-bold text-green-700 mb-6">⏰ Typical Schedule</h2>
+          <p class="text-sm text-gray-700">3:00–3:30 Arrival & snack • 3:30–4:30 Choice time/independent exploration • 4:30–5:00 Homework hour • 5:00–6:00 Enrichment & outdoor play, pickup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="calendar-page" class="page-section">
+    <div class="bg-gradient-to-br from-teal-400 to-teal-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">📅</div>
+        <h1 class="text-5xl font-extrabold text-center mb-4">Calendar &amp; Events</h1>
+        <p class="text-xl text-center text-teal-100">Stay updated with our activities and important dates</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-2">
+          <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-teal-300">
+            <h2 class="text-3xl font-bold text-teal-600 mb-6">📆 Upcoming Events</h2>
+            <div class="space-y-4">
+              <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-r-xl">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <div class="font-bold text-lg text-gray-800">Jungle Safari Day</div>
+                    <div class="text-sm text-gray-600">Special themed activities and dress-up</div>
+                  </div>
+                  <div class="text-right text-sm font-bold text-teal-600">March 15</div>
+                </div>
+              </div>
+
+              <div class="border-l-4 border-green-400 bg-green-50 p-4 rounded-r-xl">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <div class="font-bold text-lg text-gray-800">Parent-Teacher Conferences</div>
+                    <div class="text-sm text-gray-600">Schedule your meeting time</div>
+                  </div>
+                  <div class="text-right text-sm font-bold text-teal-600">March 20–21</div>
+                </div>
+              </div>
+
+              <div class="border-l-4 border-purple-400 bg-purple-50 p-4 rounded-r-xl">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <div class="font-bold text-lg text-gray-800">Spring Break</div>
+                    <div class="text-sm text-gray-600">Center closed for spring break</div>
+                  </div>
+                  <div class="text-right text-sm font-bold text-teal-600">April 1–5</div>
+                </div>
+              </div>
+
+              <div class="border-l-4 border-orange-400 bg-orange-50 p-4 rounded-r-xl">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <div class="font-bold text-lg text-gray-800">Earth Day Celebration</div>
+                    <div class="text-sm text-gray-600">Environmental activities and planting</div>
+                  </div>
+                  <div class="text-right text-sm font-bold text-teal-600">April 22</div>
+                </div>
+              </div>
+
+              <div class="border-l-4 border-pink-400 bg-pink-50 p-4 rounded-r-xl">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <div class="font-bold text-lg text-gray-800">Mother's Day Tea Party</div>
+                    <div class="text-sm text-gray-600">Special celebration for moms</div>
+                  </div>
+                  <div class="text-right text-sm font-bold text-teal-600">May 10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="bg-gradient-to-br from-teal-100 to-teal-200 rounded-3xl p-6 border-4 border-teal-400 mb-6">
+            <h3 class="text-2xl font-bold text-teal-700 mb-4">🎉 Monthly Themes</h3>
+            <div class="space-y-3">
+              <div class="bg-white rounded-xl p-3 shadow">
+                <div class="font-bold text-teal-600">March</div>
+                <div class="text-sm text-gray-600">Wild Animals & Safari</div>
+              </div>
+              <div class="bg-white rounded-xl p-3 shadow">
+                <div class="font-bold text-teal-600">April</div>
+                <div class="text-sm text-gray-600">Spring & Nature</div>
+              </div>
+              <div class="bg-white rounded-xl p-3 shadow">
+                <div class="font-bold text-teal-600">May</div>
+                <div class="text-sm text-gray-600">Community Helpers</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-3xl p-6 border-4 border-yellow-400">
+            <h3 class="text-2xl font-bold text-yellow-700 mb-4">🚫 Closures</h3>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span>Memorial Day</span><span class="font-bold">May 27</span></div>
+              <div class="flex justify-between"><span>Independence Day</span><span class="font-bold">July 4</span></div>
+              <div class="flex justify-between"><span>Labor Day</span><span class="font-bold">Sept 2</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery-page" class="page-section">
+    <div class="bg-gradient-to-br from-pink-400 to-pink-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">🖼️</div>
+        <h1 class="text-5xl font-extrabold text-center mb-4">Photo Gallery</h1>
+        <p class="text-xl text-center text-pink-100">Capturing precious moments and memories</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Replace these cards with actual images when ready -->
+        <div class="bg-gradient-to-br from-blue-200 to-blue-300 rounded-3xl p-8 shadow-xl border-4 border-blue-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">🍼</div><div class="font-bold text-blue-700">Infant Activities</div></div>
+        </div>
+        <div class="bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl p-8 shadow-xl border-4 border-orange-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">🎨</div><div class="font-bold text-orange-700">Art Projects</div></div>
+        </div>
+        <div class="bg-gradient-to-br from-green-200 to-green-300 rounded-3xl p-8 shadow-xl border-4 border-green-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">🌳</div><div class="font-bold text-green-700">Outdoor Play</div></div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-200 to-purple-300 rounded-3xl p-8 shadow-xl border-4 border-purple-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">📚</div><div class="font-bold text-purple-700">Story Time</div></div>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-3xl p-8 shadow-xl border-4 border-yellow-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">🎭</div><div class="font-bold text-yellow-700">Dramatic Play</div></div>
+        </div>
+        <div class="bg-gradient-to-br from-teal-200 to-teal-300 rounded-3xl p-8 shadow-xl border-4 border-teal-400 aspect-square flex items-center justify-center">
+          <div class="text-center"><div class="text-6xl mb-3">🎉</div><div class="font-bold text-teal-700">Special Events</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAFF -->
+  <section id="staff-page" class="page-section">
+    <div class="bg-gradient-to-br from-amber-400 to-amber-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">👥</div>
+        <h1 class="text-5xl font-extrabold text-center mb-4">Our Amazing Team</h1>
+        <p class="text-xl text-center text-amber-100">Dedicated professionals who care for your children</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Real staff per your doc -->
+        <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-amber-300">
+          <div class="w-24 h-24 bg-gradient-to-br from-amber-300 to-amber-400 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">👩‍🏫</div>
+          <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Stefanie Boyd</h3>
+          <p class="text-center text-amber-600 font-semibold mb-3">Owner/Director • CDA • CPR • 20+ yrs</p>
+          <p class="text-sm text-gray-600 text-center">Leads with high standards and a heart for families.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-blue-300">
+          <div class="w-24 h-24 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">🧑‍🏫</div>
+          <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Kennedy Warr</h3>
+          <p class="text-center text-blue-600 font-semibold mb-3">Infant Lead • 4 yrs • CPR • Assoc. in progress</p>
+          <p class="text-sm text-gray-600 text-center">Gentle, responsive care for our youngest learners.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-orange-300">
+          <div class="w-24 h-24 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">🧑‍🏫</div>
+          <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Kathy Bailey</h3>
+          <p class="text-center text-orange-600 font-semibold mb-3">Toddler Lead • 10+ yrs • CPR</p>
+          <p class="text-sm text-gray-600 text-center">Playful structure that builds independence.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-teal-300">
+          <div class="w-24 h-24 bg-gradient-to-br from-teal-300 to-teal-400 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">🧑‍🏫</div>
+          <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Heaven Harris</h3>
+          <p class="text-center text-teal-600 font-semibold mb-3">Infant Co-Teacher • 4 yrs • CPR • CDA in progress</p>
+          <p class="text-sm text-gray-600 text-center">Warm, consistent routines and sensory play.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-purple-300">
+          <div class="w-24 h-24 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">🧑‍🏫</div>
+          <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Keir Warr</h3>
+          <p class="text-center text-purple-600 font-semibold mb-3">Preschool Lead • 5 yrs • CDA • CPR</p>
+          <p class="text-sm text-gray-600 text-center">Kindergarten readiness through playful rigor.</p>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-3xl p-8 border-4 border-amber-400">
+        <h2 class="text-3xl font-bold text-amber-700 mb-6 text-center">🌟 Our Qualifications</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex items-start gap-3"><span class="text-2xl">✅</span><div><div class="font-bold text-gray-800">Licensed & Certified</div><div class="text-sm text-gray-600">All staff meet state licensing requirements</div></div></div>
+          <div class="flex items-start gap-3"><span class="text-2xl">✅</span><div><div class="font-bold text-gray-800">Background Checked</div><div class="text-sm text-gray-600">Comprehensive background screenings</div></div></div>
+          <div class="flex items-start gap-3"><span class="text-2xl">✅</span><div><div class="font-bold text-gray-800">CPR & First Aid</div><div class="text-sm text-gray-600">Current certifications maintained</div></div></div>
+          <div class="flex items-start gap-3"><span class="text-2xl">✅</span><div><div class="font-bold text-gray-800">Ongoing Training</div><div class="text-sm text-gray-600">Regular professional development</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-page" class="page-section">
+    <div class="bg-gradient-to-br from-emerald-400 to-emerald-600 text-white py-16 vine-pattern">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-6xl mb-4 text-center">📞</div>
+        <h1 class="text-5xl font-extrabold text-center mb-4">Contact Us</h1>
+        <p class="text-xl text-center text-emerald-100">We'd love to hear from you!</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-emerald-300 mb-6">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6">📍 Visit Us</h2>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4"><span class="text-3xl">🏢</span>
+                <div>
+                  <div class="font-bold text-gray-800">Address</div>
+                  <div class="text-gray-600">26140 W 7 Mile Road, Redford, MI 48240</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4"><span class="text-3xl">📞</span>
+                <div>
+                  <div class="font-bold text-gray-800">Phone</div>
+                  <div class="text-gray-600">(313) 694-3140</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4"><span class="text-3xl">✉️</span>
+                <div>
+                  <div class="font-bold text-gray-800">Email</div>
+                  <div class="text-gray-600">hakunamatatahchildcare@yahoo.com</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4"><span class="text-3xl">🌐</span>
+                <div>
+                  <div class="font-bold text-gray-800">Website</div>
+                  <div class="text-gray-600">hakunamatatahchildcare.com</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4"><span class="text-3xl">⏰</span>
+                <div>
+                  <div class="font-bold text-gray-800">Hours</div>
+                  <div class="text-gray-600">Mon–Fri • 5:00 a.m. – 6:00 p.m. <span class="opacity-80">(Extended hours available — see Director)</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-3xl p-6 border-4 border-emerald-400">
+            <h3 class="text-2xl font-bold text-emerald-700 mb-4">🎒 Ready to Enroll?</h3>
+            <p class="text-gray-700 mb-4">Download our enrollment packet or schedule a tour to see our jungle-themed classrooms!</p>
+            <div class="space-y-3">
+              <a href="Hakuna-Matatah-Enrollment-Packet.pdf" download class="block text-center px-6 py-3 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition-all">📄 Download Enrollment Packet</a>
+              <button onclick="document.getElementById('tourForm').scrollIntoView({behavior:'smooth'})" class="block w-full text-center px-6 py-3 rounded-full border-3 border-emerald-600 text-emerald-700 font-bold hover:bg-emerald-50 transition-all">🗓️ Schedule a Tour</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bg-white rounded-3xl p-8 shadow-xl border-4 border-emerald-300">
+            <h2 class="text-3xl font-bold text-emerald-600 mb-6">📝 Schedule a Tour</h2>
+            <form id="tourForm" onsubmit="handleTourSubmit(event)" class="space-y-4">
+              <div>
+                <label for="parent-name" class="block text-sm font-bold text-gray-700 mb-2">Parent/Guardian Name *</label>
+                <input type="text" id="parent-name" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-emerald-500 focus:outline-none" />
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email Address *</label>
+                <input type="email" id="email" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-emerald-500 focus:outline-none" />
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">Phone Number *</label>
+                <input type="tel" id="phone" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-emerald-500 focus:outline-none" />
+              </div>
+              <div>
+                <label for="child-age" class="block text-sm font-bold text-gray-700 mb-2">Child's Age</label>
+                <select id="child-age" class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-emerald-500 focus:outline-none">
+                  <option value="">Select age range</option>
+                  <option value="infant">Infant (6 weeks - 18 months)</option>
+                  <option value="toddler">Toddler (18 months - 3 years)</option>
+                  <option value="preschool">Preschool (3 - 5 years)</option>
+                  <option value="aftercare">Aftercare (5 - 12 years)</option>
+                </select>
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-bold text-gray-700 mb-2">Message</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-emerald-500 focus:outline-none" placeholder="Tell us about your needs or preferred tour dates..."></textarea>
+              </div>
+              <button type="submit" class="w-full px-6 py-4 rounded-full bg-yellow-400 text-green-900 font-bold text-lg hover:bg-yellow-300 hover:scale-105 transition-all jungle-shadow">🎉 Request Tour</button>
+            </form>
+            <div id="form-message" class="mt-4 hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gradient-to-r from-green-800 via-emerald-700 to-green-800 text-white py-8 border-t-4 border-yellow-400">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <div class="text-2xl font-bold mb-2">🌴 Hakuna Matatah Preschool 🌴</div>
+      <p class="text-emerald-200 text-sm mb-4">Where Learning and Care Meet</p>
+      <div class="text-xs text-emerald-300">© 2024 Hakuna Matatah Preschool &amp; Childcare Center. All rights reserved.</div>
     </div>
   </footer>
 
   <script>
-    // Small nicety
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const defaultConfig = {
+      preschool_name: "Hakuna Matatah",
+      hero_tagline: "🌺 Where Learning and Care Meet 🌺",
+      hero_title: "Hakuna Matatah Preschool & Childcare Center",
+      hero_description: "A warm, faith-filled learning environment where children grow, explore, and discover the joy of learning through play, creativity, and love.",
+      infant_name: "Infant",
+      toddler_name: "Toddler",
+      preschool_name_class: "Preschool",
+      aftercare_name: "Aftercare",
+      background_color: "#059669",
+      surface_color: "#10B981",
+      text_color: "#FFFFFF",
+      primary_action_color: "#FCD34D",
+      secondary_action_color: "#065F46",
+      font_family: "system-ui",
+      font_size: 16
+    };
+
+    let currentPage = 'home';
+
+    function showPage(pageName) {
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(`${pageName}-page`);
+      if (el) {
+        el.classList.add('active');
+        currentPage = pageName;
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('nav-active'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('mobileMenu').classList.add('hidden');
+      }
+    }
+
+    function handleTourSubmit(event) {
+      event.preventDefault();
+      const messageDiv = document.getElementById('form-message');
+      messageDiv.className = 'mt-4 p-4 rounded-xl bg-green-100 border-2 border-green-400 text-green-800';
+      messageDiv.textContent = '✅ Thank you! We\'ll contact you soon to schedule your tour.';
+      messageDiv.classList.remove('hidden');
+      document.getElementById('tourForm').reset();
+      setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+    }
+
+    async function onConfigChange(config) {
+      const heroTitleEl = document.getElementById('hero-title');
+      const heroDescEl = document.getElementById('hero-description');
+      const infantNameEl = document.getElementById('infant-name');
+      const toddlerNameEl = document.getElementById('toddler-name');
+      const preschoolNameClassEl = document.getElementById('preschool-name-class');
+      const aftercareNameEl = document.getElementById('aftercare-name');
+
+      if (heroTitleEl) heroTitleEl.textContent = config.hero_title || defaultConfig.hero_title;
+      if (heroDescEl) heroDescEl.textContent = config.hero_description || defaultConfig.hero_description;
+      if (infantNameEl) infantNameEl.textContent = config.infant_name || defaultConfig.infant_name;
+      if (toddlerNameEl) toddlerNameEl.textContent = config.toddler_name || defaultConfig.toddler_name;
+      if (preschoolNameClassEl) preschoolNameClassEl.textContent = config.preschool_name_class || defaultConfig.preschool_name_class;
+      if (aftercareNameEl) aftercareNameEl.textContent = config.aftercare_name || defaultConfig.aftercare_name;
+
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      document.querySelector('header').style.background = `linear-gradient(to right, ${bgColor}, ${surfaceColor}, ${bgColor})`;
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      if (heroTitleEl) heroTitleEl.style.fontSize = `${baseSize * 2.5}px`;
+      if (heroDescEl) heroDescEl.style.fontSize = `${baseSize * 1.125}px`;
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+            { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["preschool_name", config.preschool_name || defaultConfig.preschool_name],
+          ["hero_tagline", config.hero_tagline || defaultConfig.hero_tagline],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          ["hero_description", config.hero_description || defaultConfig.hero_description],
+          ["infant_name", config.infant_name || defaultConfig.infant_name],
+          ["toddler_name", config.toddler_name || defaultConfig.toddler_name],
+          ["preschool_name_class", config.preschool_name_class || defaultConfig.preschool_name_class],
+          ["aftercare_name", config.aftercare_name || defaultConfig.aftercare_name],
+        ])
+      });
+    }
   </script>
+
+  <!-- Cloudflare stub left as-is -->
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d7977bd5e0e578',t:'MTc2Mjk2Njg5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
-"""
-with open('/mnt/data/index_jungle.html', 'w', encoding='utf-8') as f:
-    f.write(index_html)
-print("Saved to /mnt/data/index_jungle.html")
